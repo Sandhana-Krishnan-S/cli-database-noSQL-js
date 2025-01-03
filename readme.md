@@ -18,3 +18,11 @@
 - *Step 1 :* Do a simple `Read` and `Write` operation possible  
 - *Step 2 :* Satrt develop structure defining and structure based data bundleing just like `SQL` but in `BSON`
 - *Step 3 :* Make such thing that it can `Store` and `Execute` **JS** code on the database `data on entry` 
+
+
+### **Planned Comments :**
+
+- `sans help` : lists all the cmds and usages
+- `sans create` : used to create collection , document schematic etc..
+- `sans write` : used to write new data to the collection
+- `sans list` : lists all the available collection , document schematic etc..
