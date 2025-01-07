@@ -12,7 +12,6 @@ if (args.length === 0) {
 
 search(args)
 
-// args[0] == '-test' ? console.log('hello') : console.log('cmd - not found')
 
 
 

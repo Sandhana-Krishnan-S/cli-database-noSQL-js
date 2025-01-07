@@ -11,5 +11,8 @@
   "description": "",
   "bin": {
     "sans": "./sans.js"
+  },
+  "dependencies": {
+    "cli-database-nosql": "file:"
   }
 }
