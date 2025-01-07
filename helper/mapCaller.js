@@ -7,7 +7,6 @@
 const  { mapper } = require("../mapper/mainMapper")
 
 const search = (args) => {
-    console.log(mapper)
     if(args[0].charAt(0) == '-') {
         if(isFoundFlag(args[0])) {
             const tree = mapper.flagMapper[args[0]]
@@ -15,6 +14,8 @@ const search = (args) => {
         } else {
             console.log(`sans: '${args[0]}' is not a sans command. See 'sans -help'`)
         }
+    } else {
+        //do for cmds
     }
 }
 
