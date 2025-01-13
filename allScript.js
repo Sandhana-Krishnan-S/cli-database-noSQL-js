@@ -4,3 +4,4 @@ const hiddenCmd = {
 }
 
 module.exports = { hiddenCmd }
+
