@@ -22,7 +22,7 @@
 
 ### **Planned Comments :**
 
-- `sans help` : lists all the cmds and usages
+- `sans -help` : lists all the cmds and usages
 - `sans create` : used to create collection , document schematic etc..
 - `sans write` : used to write new data to the collection
 - `sans list` : lists all the available collection , document schematic etc..
