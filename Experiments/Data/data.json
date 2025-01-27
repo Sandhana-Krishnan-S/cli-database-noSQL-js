@@ -1,8 +1,18 @@
-{
-  "user1": {
-    "uid": "string",
-    "name": "string",
-    "age": "number",
-    "password": "string"
+[
+  {
+    "user1": {
+      "uid": "string",
+      "name": "string",
+      "age": "number",
+      "password": "string"
+    }
+  },
+  {
+    "user": {
+      "uid": "string",
+      "name": "string",
+      "age": "number",
+      "password": "string"
+    }
   }
-}
+]
