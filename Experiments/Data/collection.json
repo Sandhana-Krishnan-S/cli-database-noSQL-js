@@ -1,0 +1,7 @@
+{
+  "user": {
+    "name": "string",
+    "age": "number",
+    "password": "string"
+  }
+}

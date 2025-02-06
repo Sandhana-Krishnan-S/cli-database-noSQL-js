@@ -4,11 +4,13 @@ const { threadId } = require("worker_threads")
 
 
 const dataType = ['string' , 'number' , 'boolean']
-const fileName  = 'data.json'
+const fileName  = 'collection.json'
+const dataFile = 'data.json'
 
 const start = async () => {
     try{
-        fs.writeFileSync(path.join(__dirname , "Data", fileName) , "[]" )
+        fs.writeFileSync(path.join(__dirname , "Data", fileName) , "{}" )
+        fs.writeFileSync(path.join(__dirname , "Data", dataFile) , "{}" )
         console.log("created")
     } catch(err) {
         console.log("failed" + err.message)
@@ -27,7 +29,7 @@ const create = async (obj) => {
     })
     try {
         const Documents = JSON.parse(fs.readFileSync(path.join(__dirname , 'Data' , fileName) , 'utf8'))
-        Documents.push(obj)
+        Documents[name] = obj[name]
         fs.writeFileSync(path.join(__dirname , 'Data' , fileName) , JSON.stringify(Documents, null, 2))
         console.log("wrote")
     } catch(err) {
@@ -35,8 +37,28 @@ const create = async (obj) => {
     }
 }
 
-const addData = () => {
-
+const addData = async (args , obj) => {
+    try {
+        const template = await JSON.parse(fs.readFileSync(path.join(__dirname , 'Data' , fileName) , 'utf8'))
+        const schema = template[args]
+        if(schema == undefined) {
+            throw new Error(`No such collection exists nammed ${args} in the db`)
+        }
+        Object.keys(schema).forEach(key => {
+            if(schema[key] != typeof obj[key]) {
+                throw new Error(`Type mis-match on Key ${key}`)
+            }
+        })
+        const collectionValue = await JSON.parse(fs.readFileSync(path.join(__dirname , 'Data' , dataFile) , 'utf8'))
+        if(collectionValue[args] === undefined) {
+            collectionValue[args] = {}
+        }
+        collectionValue[args][Date.now()+ Math.random().toString().substring(2 , 7)] = obj
+        fs.writeFileSync(path.join(__dirname , 'Data' , dataFile) , JSON.stringify(collectionValue , null , 2))
+        console.log("data Wrote")
+    } catch (err) {
+        throw new Error('unable to write the data' + err.message)
+    }
 }
 
 const readData = () => {
@@ -50,6 +72,7 @@ const deleteData = () => {
 const deleteFile = async  () => {
     try {
         fs.unlinkSync(path.join(__dirname, "Data", fileName))
+        fs.unlinkSync(path.join(__dirname, "Data", dataFile))
         console.log("File deleted successfully")
     } catch (err) {
         console.log("Error deleting file:", err.message)
@@ -61,13 +84,18 @@ const main = async () => {
     await start()
     
     await create({'user': {
-        uid: "string",
         name: "string",
         age: "number",
         password: "string"
     }})
+
+    addData('user' , {
+        name: "sans",
+        age: 0,
+        password: "hello i am sans"
+    })
     
-    await deleteFile()
+    // await deleteFile()
 }    
 
 main()
