@@ -1,12 +1,12 @@
 const fs = require("fs")
 const path = require("path")
-const { threadId } = require("worker_threads")
 
 
 const dataType = ['string' , 'number' , 'boolean']
 const fileName  = 'collection.json'
 const dataFile = 'data.json'
 
+//TODO: !! Add a decodeing from BSON to JSON on creation
 const start = async () => {
     try{
         fs.writeFileSync(path.join(__dirname , "Data", fileName) , "{}" )
@@ -14,6 +14,7 @@ const start = async () => {
         console.log("created")
     } catch(err) {
         console.log("failed" + err.message)
+        throw new Error("Failed to create files" + err.message)
     }
 }
 
@@ -37,6 +38,8 @@ const create = async (obj) => {
     }
 }
 
+//TODO: !!Test this manually before pushing to main
+//IMPORTANT: !!Always use try-catch when using this function
 const addData = async (args , obj) => {
     try {
         const template = await JSON.parse(fs.readFileSync(path.join(__dirname , 'Data' , fileName) , 'utf8'))
@@ -61,11 +64,11 @@ const addData = async (args , obj) => {
     }
 }
 
-const readData = () => {
+const readData = async () => {
 
 }
 
-const deleteData = () => {
+const deleteData = async () => {
 
 }
 
@@ -76,23 +79,24 @@ const deleteFile = async  () => {
         console.log("File deleted successfully")
     } catch (err) {
         console.log("Error deleting file:", err.message)
+        throw new Error("Failed to stop!!" + err.message)
     }    
 }
 
 
 const main = async () => {
-    await start()
+    // await start()
     
-    await create({'user': {
-        name: "string",
-        age: "number",
-        password: "string"
-    }})
+    // await create({'user': {
+    //     name: "string",
+    //     age: "number",
+    //     password: "string"
+    // }})
 
     addData('user' , {
-        name: "sans",
-        age: 0,
-        password: "hello i am sans"
+        name: "vishal",
+        age: 20,
+        password: "123"
     })
     
     // await deleteFile()
