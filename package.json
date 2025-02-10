@@ -13,7 +13,6 @@
     "sans": "./sans.js"
   },
   "dependencies": {
-    "bson": "^6.10.1",
-    "cli-database-nosql": "file:"
+    "bson": "^6.10.1"
   }
 }
