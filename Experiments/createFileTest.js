@@ -7,7 +7,7 @@ const fileName  = 'collection.json'
 const dataFile = 'data.json'
 
 //TODO: !! Add a decodeing from BSON to JSON on creation
-const start = async () => {
+const start = () => {
     try{
         fs.writeFileSync(path.join(__dirname , "Data", fileName) , "{}" )
         fs.writeFileSync(path.join(__dirname , "Data", dataFile) , "{}" )
@@ -19,8 +19,9 @@ const start = async () => {
 }
 
 //TODO: !!read and then right to append datamodel --DONE😊
+//TODO: !!add unique and privary keys with required 
 //IMPORTANT: !!Always use Try-Catch to call This function 
-const create = async (obj) => {
+const create = (obj) => {
     if(Object.keys(obj).length > 1) {throw new Error('Invalid declaratin format')}
     const name = Object.keys(obj)
     Object.entries(obj[name]).forEach(([key , value]) => {
@@ -38,11 +39,11 @@ const create = async (obj) => {
     }
 }
 
-//TODO: !!Test this manually before pushing to main
+//TODO: !!Test this manually before pushing to main -
 //IMPORTANT: !!Always use try-catch when using this function
-const addData = async (args , obj) => {
+const addData = (args , obj) => {
     try {
-        const template = await JSON.parse(fs.readFileSync(path.join(__dirname , 'Data' , fileName) , 'utf8'))
+        const template = JSON.parse(fs.readFileSync(path.join(__dirname , 'Data' , fileName) , 'utf8'))
         const schema = template[args]
         if(schema == undefined) {
             throw new Error(`No such collection exists nammed ${args} in the db`)
@@ -52,7 +53,10 @@ const addData = async (args , obj) => {
                 throw new Error(`Type mis-match on Key ${key}`)
             }
         })
-        const collectionValue = await JSON.parse(fs.readFileSync(path.join(__dirname , 'Data' , dataFile) , 'utf8'))
+        if(Object.keys(schema).length != Object.keys(obj).length) {
+            throw new Error(`Too many arguments, Data doesn't match schema.`)
+        }
+        const collectionValue = JSON.parse(fs.readFileSync(path.join(__dirname , 'Data' , dataFile) , 'utf8'))
         if(collectionValue[args] === undefined) {
             collectionValue[args] = {}
         }
@@ -64,15 +68,42 @@ const addData = async (args , obj) => {
     }
 }
 
-const readData = async () => {
+const readSchema = (args) => {
+    try {
+        const template = JSON.parse(fs.readFileSync(path.join(__dirname , 'Data' , fileName) , 'utf8'))
+        const schema = template[args]
+        if(schema == undefined) {
+            throw new Error(`No such collection exists nammed ${args} in the db`)
+        }
+        console.log(schema)
+    } catch(err) {
+        console.log(`can't read schema : ` + err.message)
+    } 
+}
+
+const readData = (args) => {
+    try {
+        const allData = JSON.parse(fs.readFileSync(path.join(__dirname , 'Data' , dataFile) , 'utf8'))
+        const data = allData[args]
+        if(data == undefined) {
+            throw new Error(`No such collection exists nammed ${args} in the db`)
+        }
+        console.log(data)
+    } catch (err) {
+        console.log(`unable to read data : ` + err.message)
+    }
+}
+
+const searchData = () => {
 
 }
 
-const deleteData = async () => {
+const deleteData = () => {
 
 }
 
-const deleteFile = async  () => {
+//TODO: Before deletion of file convert all files to be BSON
+const deleteFile = () => {
     try {
         fs.unlinkSync(path.join(__dirname, "Data", fileName))
         fs.unlinkSync(path.join(__dirname, "Data", dataFile))
@@ -84,22 +115,24 @@ const deleteFile = async  () => {
 }
 
 
-const main = async () => {
-    // await start()
+const main = () => {
+    //  start()
     
-    // await create({'user': {
+    //  create({'user': {
     //     name: "string",
     //     age: "number",
     //     password: "string"
     // }})
 
-    addData('user' , {
-        name: "vishal",
-        age: 20,
-        password: "123"
-    })
-    
-    // await deleteFile()
+    // addData('user' , {
+    //     name: "vishal",
+    //     // email: "vishal@gmail.com",
+    //     age: 20,
+    //     password: "123"
+    // })
+    // readSchema('user')
+    // readData('user')
+     deleteFile()
 }    
 
 main()
