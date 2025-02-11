@@ -2,9 +2,9 @@
 
 ### **To do list :**
 
-- Learn to code for cli and manage and write some arguments manager from screatch <❌>
-- DO simple `Read` and `Write` operations and manage the data efficiently <❌>
-- Try to Implement a structured NO-SQL document management and functions <❌>
+- Learn to code for cli and manage and write some arguments manager from screatch <✅>
+- DO simple `Read` and `Write` operations and manage the data efficiently <✅>
+- Try to Implement a structured NO-SQL document management and functions <✅>
 - Try to writ Documentation along with the Development of this project <❌>
 
 
@@ -22,7 +22,7 @@
 
 ### **Planned Comments :**
 
-- `sans -help` : lists all the cmds and usages
+- `sans -help` : lists all the cmds and usages -- Done
 - `sans create` : used to create collection , document schematic etc..
 - `sans write` : used to write new data to the collection
 - `sans list` : lists all the available collection , document schematic etc..
