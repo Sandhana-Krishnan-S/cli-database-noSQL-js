@@ -11,7 +11,3 @@ if (args.length === 0) {
 }
 
 search(args)
-
-
-
-

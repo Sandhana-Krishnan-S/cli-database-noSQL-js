@@ -1,0 +1,109 @@
+{
+  "user": {
+    "173938007073614106": {
+      "name": "vishal",
+      "age": 20,
+      "password": "123"
+    },
+    "173938007073778199": {
+      "name": "Aarav",
+      "age": 25,
+      "password": "abc123"
+    },
+    "173938007073744483": {
+      "name": "Ishaan",
+      "age": 30,
+      "password": "pass456"
+    },
+    "173938007073792460": {
+      "name": "Rohan",
+      "age": 22,
+      "password": "secure789"
+    },
+    "173938007073788928": {
+      "name": "Mira",
+      "age": 28,
+      "password": "mypwd001"
+    },
+    "173938007073750757": {
+      "name": "Neha",
+      "age": 24,
+      "password": "test987"
+    },
+    "173938007073801871": {
+      "name": "Ananya",
+      "age": 26,
+      "password": "hello123"
+    },
+    "173938007073898393": {
+      "name": "Sahil",
+      "age": 23,
+      "password": "random000"
+    },
+    "173938007073875387": {
+      "name": "Kiran",
+      "age": 29,
+      "password": "qwerty"
+    },
+    "173938007073801300": {
+      "name": "Vikram",
+      "age": 27,
+      "password": "letmein"
+    },
+    "173938007073885023": {
+      "name": "Riya",
+      "age": 21,
+      "password": "password123"
+    },
+    "173938007073947170": {
+      "name": "Varun",
+      "age": 31,
+      "password": "admin007"
+    },
+    "173938007073908046": {
+      "name": "Tanvi",
+      "age": 19,
+      "password": "userpass"
+    },
+    "173938007073959781": {
+      "name": "Manav",
+      "age": 32,
+      "password": "rootaccess"
+    },
+    "173938007073934970": {
+      "name": "Pooja",
+      "age": 20,
+      "password": "testpass"
+    },
+    "173938007073937318": {
+      "name": "Arjun",
+      "age": 35,
+      "password": "mysecret"
+    },
+    "173938007074094464": {
+      "name": "Sanya",
+      "age": 18,
+      "password": "guessme"
+    },
+    "173938007074052052": {
+      "name": "Dev",
+      "age": 40,
+      "password": "opensesame"
+    },
+    "173938007074093022": {
+      "name": "Kartik",
+      "age": 33,
+      "password": "randompass"
+    },
+    "173938007074142973": {
+      "name": "Sneha",
+      "age": 22,
+      "password": "simple123"
+    },
+    "173938007074111020": {
+      "name": "Yash",
+      "age": 37,
+      "password": "passme123"
+    }
+  }
+}

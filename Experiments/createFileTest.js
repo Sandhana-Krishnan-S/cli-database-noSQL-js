@@ -20,7 +20,7 @@ const start = () => {
 
 //TODO: !!read and then right to append datamodel --DONE😊
 //TODO: !!add unique and privary keys with required 
-//IMPORTANT: !!Always use Try-Catch to call This function 
+//* IMPORTANT: !!Always use Try-Catch to call This function 
 const create = (obj) => {
     if(Object.keys(obj).length > 1) {throw new Error('Invalid declaratin format')}
     const name = Object.keys(obj)
@@ -40,13 +40,13 @@ const create = (obj) => {
 }
 
 //TODO: !!Test this manually before pushing to main -
-//IMPORTANT: !!Always use try-catch when using this function
-const addData = (args , obj) => {
+//* IMPORTANT: !!Always use try-catch when using this function
+const addData = (collection , obj) => {
     try {
         const template = JSON.parse(fs.readFileSync(path.join(__dirname , 'Data' , fileName) , 'utf8'))
-        const schema = template[args]
+        const schema = template[collection]
         if(schema == undefined) {
-            throw new Error(`No such collection exists nammed ${args} in the db`)
+            throw new Error(`No such collection exists nammed ${collection} in the db`)
         }
         Object.keys(schema).forEach(key => {
             if(schema[key] != typeof obj[key]) {
@@ -57,10 +57,10 @@ const addData = (args , obj) => {
             throw new Error(`Too many arguments, Data doesn't match schema.`)
         }
         const collectionValue = JSON.parse(fs.readFileSync(path.join(__dirname , 'Data' , dataFile) , 'utf8'))
-        if(collectionValue[args] === undefined) {
-            collectionValue[args] = {}
+        if(collectionValue[collection] === undefined) {
+            collectionValue[collection] = {}
         }
-        collectionValue[args][Date.now()+ Math.random().toString().substring(2 , 7)] = obj
+        collectionValue[collection][Date.now()+ Math.random().toString().substring(2 , 7)] = obj
         fs.writeFileSync(path.join(__dirname , 'Data' , dataFile) , JSON.stringify(collectionValue , null , 2))
         console.log("data Wrote")
     } catch (err) {
@@ -68,12 +68,12 @@ const addData = (args , obj) => {
     }
 }
 
-const readSchema = (args) => {
+const readSchema = (collection) => {
     try {
         const template = JSON.parse(fs.readFileSync(path.join(__dirname , 'Data' , fileName) , 'utf8'))
-        const schema = template[args]
-        if(schema == undefined) {
-            throw new Error(`No such collection exists nammed ${args} in the db`)
+        const schema = template[collection]
+        if(schema === undefined) {
+            throw new Error(`No such collection exists nammed ${collection} in the db`)
         }
         console.log(schema)
     } catch(err) {
@@ -81,12 +81,12 @@ const readSchema = (args) => {
     } 
 }
 
-const readData = (args) => {
+const readData = (collection) => {
     try {
         const allData = JSON.parse(fs.readFileSync(path.join(__dirname , 'Data' , dataFile) , 'utf8'))
-        const data = allData[args]
-        if(data == undefined) {
-            throw new Error(`No such collection exists nammed ${args} in the db`)
+        const data = allData[collection]
+        if(data === undefined) {
+            throw new Error(`No such collection exists nammed ${collection} in the db`)
         }
         console.log(data)
     } catch (err) {
@@ -94,10 +94,43 @@ const readData = (args) => {
     }
 }
 
-const searchData = () => {
 
+//* Important: !! use this only for specific search and for not not a query search to do multiple thing 
+const searchData = (collection , key , value) => {
+    try {
+        const template = JSON.parse(fs.readFileSync(path.join(__dirname , 'Data' , fileName) , 'utf8'))
+        const schema = template[collection]
+        if(schema == undefined) {
+            throw new Error(`No such collection exists nammed ${collection} in the db`)
+        }
+ 
+        if(schema[key] === undefined) {
+            throw new Error(`No such key value exists nammed ${key} in the collection ${collection}`)
+        }
+
+        const allData = JSON.parse(fs.readFileSync(path.join(__dirname , 'Data' , dataFile) , 'utf8'))
+        const data = allData[collection]
+        if(data === undefined) {
+            throw new Error(`No such collection exists nammed ${collection} in the db`)
+        }
+
+        let flag = false
+        Object.entries(data).forEach(([id , val]) => {
+            if(val[key] === value) {
+                flag = true
+                console.log(`${id} : ` , val)
+            }
+        })
+
+        if(!flag) {
+            throw new Error(`No such element found with value ${value} in the data`)
+        }
+    } catch(err) {
+        throw new Error(`unable to find the data : ` + err.message)
+    }
 }
 
+//TODO: Complete the delete Data method same as search as a basic one
 const deleteData = () => {
 
 }
@@ -116,13 +149,37 @@ const deleteFile = () => {
 
 
 const main = () => {
-    //  start()
+    // start()
     
-    //  create({'user': {
+    // create({'user': {
     //     name: "string",
     //     age: "number",
     //     password: "string"
     // }})
+    
+    // const data = [
+    //     { "name": "Aarav", "age": 25, "password": "abc123" },
+    //     { "name": "Ishaan", "age": 30, "password": "pass456" },
+    //     { "name": "Rohan", "age": 22, "password": "secure789" },
+    //     { "name": "Mira", "age": 28, "password": "mypwd001" },
+    //     { "name": "Neha", "age": 24, "password": "test987" },
+    //     { "name": "Ananya", "age": 26, "password": "hello123" },
+    //     { "name": "Sahil", "age": 23, "password": "random000" },
+    //     { "name": "Kiran", "age": 29, "password": "qwerty" },
+    //     { "name": "Vikram", "age": 27, "password": "letmein" },
+    //     { "name": "Riya", "age": 21, "password": "password123" },
+    //     { "name": "Varun", "age": 31, "password": "admin007" },
+    //     { "name": "Tanvi", "age": 19, "password": "userpass" },
+    //     { "name": "Manav", "age": 32, "password": "rootaccess" },
+    //     { "name": "Pooja", "age": 20, "password": "testpass" },
+    //     { "name": "Arjun", "age": 35, "password": "mysecret" },
+    //     { "name": "Sanya", "age": 18, "password": "guessme" },
+    //     { "name": "Dev", "age": 40, "password": "opensesame" },
+    //     { "name": "Kartik", "age": 33, "password": "randompass" },
+    //     { "name": "Sneha", "age": 22, "password": "simple123" },
+    //     { "name": "Yash", "age": 37, "password": "passme123" }
+    //   ]
+      
 
     // addData('user' , {
     //     name: "vishal",
@@ -130,9 +187,13 @@ const main = () => {
     //     age: 20,
     //     password: "123"
     // })
+    // data.forEach(((val) => {
+    //     addData('user' , val)
+    // }))
     // readSchema('user')
     // readData('user')
-     deleteFile()
+    searchData('user' , 'name' , 'Kiran')
+    //  deleteFile()
 }    
 
 main()
