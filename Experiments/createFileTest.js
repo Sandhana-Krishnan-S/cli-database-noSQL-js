@@ -1,3 +1,4 @@
+// TODO : covert sync to async with async and await
 const fs = require("fs")
 const path = require("path")
 
@@ -18,7 +19,6 @@ const start = () => {
     }
 }
 
-//TODO: !!read and then right to append datamodel --DONE😊
 //TODO: !!add unique and privary keys with required 
 //* IMPORTANT: !!Always use Try-Catch to call This function 
 const create = (obj) => {
@@ -39,7 +39,6 @@ const create = (obj) => {
     }
 }
 
-//TODO: !!Test this manually before pushing to main -
 //* IMPORTANT: !!Always use try-catch when using this function
 const addData = (collection , obj) => {
     try {
@@ -130,9 +129,40 @@ const searchData = (collection , key , value) => {
     }
 }
 
-//TODO: Complete the delete Data method same as search as a basic one
-const deleteData = () => {
+const deleteData = (collection , key , value) => {
+    try {
+        const template = JSON.parse(fs.readFileSync(path.join(__dirname , 'Data' , fileName) , 'utf8'))
+        const schema = template[collection]
+        if(schema == undefined) {
+            throw new Error(`No such collection exists nammed ${collection} in the db`)
+        }
+ 
+        if(schema[key] === undefined) {
+            throw new Error(`No such key value exists nammed ${key} in the collection ${collection}`)
+        }
 
+        const allData = JSON.parse(fs.readFileSync(path.join(__dirname , 'Data' , dataFile) , 'utf8'))
+        const data = allData[collection]
+        if(data === undefined) {
+            throw new Error(`No such collection exists nammed ${collection} in the db`)
+        }
+
+        // let flag = fals
+        const filteredData =Object.fromEntries(
+            Object.entries(data).filter(([id , val]) => {
+                return val[key] != value
+        }))
+
+
+        if(Object.entries(data).length === Object.entries(filteredData).length) {
+            throw new Error(`No such element found with value ${value} in the data`)
+        }
+        fs.writeFileSync(path.join(__dirname , 'Data' , dataFile) , JSON.stringify(filteredData , null , 2))
+        console.log("data Wrote")
+        
+    } catch(err) {
+        throw new Error(`unable to delete the data : ` + err.message)
+    }
 }
 
 //TODO: Before deletion of file convert all files to be BSON
@@ -183,7 +213,6 @@ const main = () => {
 
     // addData('user' , {
     //     name: "vishal",
-    //     // email: "vishal@gmail.com",
     //     age: 20,
     //     password: "123"
     // })
@@ -192,7 +221,7 @@ const main = () => {
     // }))
     // readSchema('user')
     // readData('user')
-    searchData('user' , 'name' , 'Kiran')
+    deleteData('user' , 'name' , 'Kiran')
     //  deleteFile()
 }    
 
